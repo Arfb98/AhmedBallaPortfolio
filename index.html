@@ -4,18 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ahmed Balla — Architect</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --cream:#F7F4EF;
+  --cream:#F5F1EB;
   --white:#FFFFFF;
   --sand:#C8A96E;
   --sand-light:#EDE0C4;
-  --dark:#1A1814;
-  --mid:#5A5550;
+  --dark:#1C1914;
+  --mid:#5C5650;
   --dim:#9A948E;
-  --border:#E8E2D8;
+  --border:#E5DFD3;
 }
 body{background:var(--cream);font-family:'Quicksand',sans-serif;font-weight:300;color:var(--dark);min-height:600px;overflow-x:hidden;}
 
@@ -24,24 +25,27 @@ nav{
   background:rgba(247,244,239,0.97);
   border-bottom:1px solid var(--border);
   display:flex;justify-content:space-between;align-items:center;
-  padding:0 48px;height:58px;
-  transition:box-shadow 0.3s;
+  padding:0 52px;height:62px;
+  transition:background 0.5s,border-color 0.5s,backdrop-filter 0.5s;
 }
-nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
+nav.scrolled{background:rgba(245,241,235,0.96);backdrop-filter:blur(16px);}
 .nav-logo{
-  font-size:13px;letter-spacing:3px;
+  font-family:'Quicksand',sans-serif;
+  font-size:16px;letter-spacing:3px;
   color:var(--dark);text-transform:uppercase;
-  font-weight:400;
+  font-weight:500;cursor:pointer;
 }
 .nav-links{display:flex;gap:40px}
 .nav-link{
   font-size:11px;letter-spacing:2px;
   text-transform:uppercase;color:var(--dim);
   cursor:pointer;padding:4px 0;
-  border-bottom:1px solid transparent;
-  transition:all 0.2s;font-weight:400;
+  position:relative;
+  transition:color 0.2s;font-weight:400;
 }
-.nav-link:hover,.nav-link.active{color:var(--dark);border-bottom-color:var(--sand)}
+.nav-link:hover,.nav-link.active{color:var(--dark);}
+.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--sand);transform:scaleX(0);transform-origin:left;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+.nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
 
 .page{display:none}
 .page.active{display:block;animation:fadeIn 0.3s ease;}
@@ -235,6 +239,7 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
   font-size:17px;font-weight:500;
   color:var(--dark);margin-bottom:4px;
 }
+.card-location{
   font-size:10px;letter-spacing:2px;
   text-transform:uppercase;color:var(--dim);font-weight:400;
 }
@@ -340,6 +345,8 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
 }
 .contact-value{font-size:14px;color:var(--dark);line-height:1.8;font-weight:500}
 .contact-divider{width:24px;height:1px;background:var(--sand);margin:28px 0}
+.contact-link{color:var(--dark);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+.contact-link:hover{color:var(--sand);border-bottom-color:var(--sand)}
 .form-group{margin-bottom:20px}
 .form-label{
   font-size:9px;letter-spacing:3px;
@@ -400,40 +407,201 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
 #lightbox-close{position:fixed;top:20px;right:28px;color:#fff;font-size:32px;line-height:1;cursor:pointer;opacity:0.7;font-weight:300;}
 #lightbox-close:hover{opacity:1;}
 .detail-photo img{cursor:zoom-in;}
+
+/* SCROLL REVEALS */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.75s cubic-bezier(0.16,1,0.3,1),transform 0.75s cubic-bezier(0.16,1,0.3,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.stagger-reveal>*{opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);}
+.stagger-reveal.in>*:nth-child(1){opacity:1;transform:none;transition-delay:0ms;}
+.stagger-reveal.in>*:nth-child(2){opacity:1;transform:none;transition-delay:80ms;}
+.stagger-reveal.in>*:nth-child(3){opacity:1;transform:none;transition-delay:160ms;}
+.stagger-reveal.in>*:nth-child(4){opacity:1;transform:none;transition-delay:240ms;}
+.stagger-reveal.in>*:nth-child(5){opacity:1;transform:none;transition-delay:320ms;}
+
+/* PAGE TRANSITION */
+.page.active{animation:pageIn 0.55s cubic-bezier(0.16,1,0.3,1) both;}
+@keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* CUSTOM CURSOR */
+#cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;background:var(--sand);z-index:9999;pointer-events:none;will-change:transform;}
+#cursor-ring{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;border:1px solid rgba(28,25,20,0.35);z-index:9998;pointer-events:none;will-change:transform;transition:border-color 0.3s;}
+@media(pointer:fine){body{cursor:none;}a,button,[onclick]{cursor:none;}}
+
+/* MARQUEE */
+.marquee-strip{overflow:hidden;background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:11px 0;white-space:nowrap;}
+.marquee-inner{display:inline-block;animation:marqueeScroll 28s linear infinite;}
+@keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(200,169,110,0.7);font-weight:300;}
+
+/* SCROLL INDICATOR */
+.scroll-indicator{position:absolute;bottom:36px;left:52px;display:flex;align-items:center;gap:10px;opacity:0.45;pointer-events:none;}
+.scroll-line{width:1px;height:36px;background:var(--sand);animation:bob 1.8s ease infinite;}
+.scroll-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mid);}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+
+/* HERO ENTRANCE */
+.he{opacity:0;transform:translateY(20px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.he.in{opacity:1;transform:none;}
+
+/* DISPLAY FONT OVERRIDES */
+.hero-name{font-family:'Quicksand',sans-serif;font-size:clamp(64px,6vw,88px);font-weight:300;line-height:0.9;letter-spacing:-2px;}
+.stat-num{font-family:'Quicksand',sans-serif;font-size:40px;font-weight:400;}
+.card-name{font-family:'Quicksand',sans-serif;font-size:22px;font-weight:400;}
+.detail-title{font-family:'Quicksand',sans-serif;font-size:42px;font-weight:300;line-height:1.05;letter-spacing:-0.5px;}
+.page-header h1{font-family:'Quicksand',sans-serif;font-size:clamp(40px,4vw,58px);font-weight:300;letter-spacing:-1px;}
+
+/* SECTION HEADING GOLD RULE */
+.detail-section-heading{display:flex;align-items:center;gap:16px;}
+.detail-section-heading::before{content:'';flex-shrink:0;width:24px;height:1px;background:var(--sand);}
+
+/* PROJECT CARD ENHANCEMENTS */
+.project-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(28,25,20,0.10);}
+.card-img-wrap img{transition:transform 0.6s ease;}
+.project-card:hover .card-img-wrap img{transform:scale(1.04);}
+.card-cat{position:absolute;top:14px;left:14px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.85);padding:4px 8px;background:rgba(28,25,20,0.55);opacity:0;transition:opacity 0.3s;z-index:2;}
+.project-card:hover .card-cat{opacity:1;}
+.card-img-overlay{background:linear-gradient(135deg,rgba(28,25,20,0.5),rgba(28,25,20,0.3))!important;}
+.overlay-text,.overlay-text span{transform:translateY(8px);transition:transform 0.3s ease;display:block;}
+.project-card:hover .overlay-text,.project-card:hover .overlay-text span{transform:translateY(0);}
+
+/* HERO RIGHT EXTRAS */
+.hero-right{position:relative;}
+.hero-svg-grid{position:absolute;inset:0;width:100%;height:100%;opacity:.07;pointer-events:none;}
+.hero-right-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,25,20,0.75) 0%,rgba(28,25,20,0.15) 55%,transparent 100%);z-index:1;pointer-events:none;}
+.hero-float{position:absolute;bottom:44px;left:44px;right:44px;z-index:2;}
+.hero-float-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(200,169,110,0.5);margin-bottom:16px;}
+.hero-float-quote{font-size:13px;line-height:1.8;color:rgba(255,255,255,0.55);font-weight:300;max-width:360px;}
+.hero-float-tags{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;}
+.hero-float-tag{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,169,110,0.6);padding:5px 10px;border:1px solid rgba(200,169,110,0.2);}
+
+/* SERVICES STRIP */
+.services-strip{background:#EDE0C4;padding:80px 52px;border-top:1px solid rgba(255,255,255,0.06);}
+.services-overline{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--sand);margin-bottom:12px;font-weight:400;}
+.services-h2{font-family:'Quicksand',sans-serif;font-size:48px;font-weight:300;color:var(--dark);margin-bottom:52px;letter-spacing:-0.5px;}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.service-cell{padding:40px 40px 40px 0;border-top:1px solid var(--border);}
+.service-cell:not(:first-child){padding-left:40px;}
+.service-cell:not(:last-child){border-right:1px solid var(--border);}
+.service-title{font-family:'Quicksand',sans-serif;font-size:28px;font-weight:300;color:var(--dark);margin-bottom:16px;padding-top:20px;border-top:3px solid var(--sand);}
+.service-desc{font-size:13px;line-height:1.9;color:var(--mid);font-weight:300;}
+
+/* FOOTER */
+.site-footer{background:#EDE0C4;padding:52px;border-top:1px solid rgba(255,255,255,0.06);}
+.footer-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;}
+.footer-logo{font-family:'Quicksand',sans-serif;font-size:18px;letter-spacing:3px;color:var(--dark);font-weight:400;}
+.footer-links{display:flex;gap:32px;}
+.footer-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);background:none;border:none;font-weight:300;font-family:'Quicksand',sans-serif;transition:color 0.2s;cursor:pointer;}
+.footer-link:hover{color:var(--sand);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(139,100,55,0.2);padding-top:28px;}
+.footer-copy{font-size:11px;color:var(--dim);font-weight:300;}
+.footer-email{font-size:11px;color:var(--sand);font-weight:300;}
+
+/* HERO TAG SPACING */
+.hero-tag{font-size:9px;letter-spacing:5px;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* MOBILE NAV */
+.nav-hamburger{display:none;flex-direction:column;justify-content:space-between;width:22px;height:14px;background:none;border:none;cursor:pointer;padding:0;}
+.nav-hamburger span{display:block;height:1px;background:var(--dark);transition:transform 0.3s,opacity 0.3s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+@media(max-width:700px){
+  nav{padding:0 24px;position:relative;}
+  .nav-hamburger{display:flex;}
+  .nav-links{
+    display:none;position:absolute;top:62px;left:0;right:0;
+    flex-direction:column;gap:0;
+    background:rgba(245,241,235,0.98);backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);z-index:99;
+  }
+  .nav-links.open{display:flex;}
+  .nav-link{padding:16px 24px;border-bottom:1px solid var(--border);}
+  .nav-link::after{display:none;}
+  .hero-left{padding:48px 24px;}
+  .home-hero{grid-template-columns:1fr;}
+  .hero-right{display:none;}
+  .home-stats{grid-template-columns:1fr 1fr;}
+  .stat-cell:last-child{border-top:1px solid var(--border);}
+  .about-wrap,.contact-wrap{padding:60px 24px;}
+  .about-grid{grid-template-columns:1fr;}
+  .projects-wrap{padding:60px 24px;}
+  .projects-grid{grid-template-columns:1fr;}
+  .detail-wrap{padding:40px 24px 60px;}
+  .detail-hero{grid-template-columns:1fr;}
+  .detail-photos{grid-template-columns:1fr 1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .services-strip{padding:60px 24px;}
+  .services-grid{grid-template-columns:1fr;}
+  .site-footer{padding:40px 24px;}
+  .footer-top{flex-direction:column;gap:20px;align-items:flex-start;}
+  .footer-links{flex-wrap:wrap;}
+}
 </style>
 </head>
 <body>
 
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
 <nav>
-  <div class="nav-logo">Ahmed Balla</div>
-  <div class="nav-links">
+  <div class="nav-logo" onclick="showPage('home',document.querySelectorAll('.nav-link')[0])">Ahmed Balla</div>
+  <div class="nav-links" id="nav-links">
     <div class="nav-link active" onclick="showPage('home',this)">Home</div>
     <div class="nav-link" onclick="showPage('about',this)">About</div>
     <div class="nav-link" onclick="showPage('projects',this)">Projects</div>
     <div class="nav-link" onclick="showPage('contact',this)">Contact</div>
   </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HOME -->
 <div class="page active" id="page-home">
   <div class="home-hero">
     <div class="hero-left">
-      <div class="hero-tag">Freelance Architect &middot; Available Worldwide</div>
-      <div class="hero-name">Ahmed<br>Balla</div>
-      <div class="hero-title">B.Arch &nbsp;&middot;&nbsp; LEED Green Associate &nbsp;&middot;&nbsp; SCE</div>
+      <div class="he hero-tag" style="transition-delay:0.1s">Freelance Architect &middot; Available Worldwide</div>
+      <div class="he hero-name" style="transition-delay:0.2s">Ahmed<br>Balla</div>
+      <div class="he hero-title" style="transition-delay:0.45s">B.Arch &nbsp;&middot;&nbsp; LEED Green Associate &nbsp;&middot;&nbsp; SCE</div>
       <div class="hero-bio">Architecture without borders. I bring a deep, research-driven design philosophy to clients across the globe &mdash; from earth-material civic centers in Sudan to employee experience environments in Riyadh. Rooted in vernacular intelligence, passive climate strategy, and the conviction that every space is a social act, I translate local context into universal design language. Wherever you build, I design &mdash; remotely, rigorously, and with purpose.</div>
-      <div class="hero-cta">
+      <div class="he hero-cta" style="transition-delay:0.75s">
         <button class="btn-primary" onclick="showPage('projects',document.querySelectorAll('.nav-link')[2])">View Projects</button>
         <button class="btn-outline" onclick="showPage('contact',document.querySelectorAll('.nav-link')[3])">Get in Touch</button>
       </div>
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+        <span class="scroll-label">Scroll</span>
+      </div>
     </div>
     <div class="hero-right">
-      <img class="hero-photo" src="images/profile-photo.jpg" alt="Ahmed Balla">
+      <svg class="hero-svg-grid" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="archgrid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="#C8A96E" stroke-width="0.8"/></pattern></defs><rect width="100%" height="100%" fill="url(#archgrid)"/></svg>
+      <div class="hero-right-gradient"></div>
+      <div class="hero-float">
+        <div class="hero-float-label">Design Philosophy</div>
+        <p class="hero-float-quote">"Vernacular intelligence, passive climate strategy, and the conviction that every space is a social act."</p>
+        <div class="hero-float-tags">
+          <span class="hero-float-tag">LEED Green Associate</span>
+          <span class="hero-float-tag">SCE #855675</span>
+          <span class="hero-float-tag">4+ Years</span>
+        </div>
+      </div>
+      <img class="hero-photo" src="images/img01.jpg" alt="Ahmed Balla">
+    </div>
+  </div>
+
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span class="marquee-item">Architecture  &middot;  Interior Design  &middot;  Civic Spaces  &middot;  LEED Green Associate  &middot;  Experiential Design  &middot;  Booth &amp; Events  &middot;  Vernacular Intelligence  &middot;  Passive Cooling  &middot;  Riyadh &middot; Khartoum &middot; Worldwide  &middot;  Architecture  &middot;  Interior Design  &middot;  Civic Spaces  &middot;  LEED Green Associate  &middot;  Experiential Design  &middot;  Booth &amp; Events  &middot;  Vernacular Intelligence  &middot;  Passive Cooling  &middot;  Riyadh &middot; Khartoum &middot; Worldwide  &middot;  Architecture  &middot;  Interior Design  &middot;  Civic Spaces  &middot;  LEED Green Associate  &middot;  Experiential Design  &middot;  Booth &amp; Events  &middot;  Vernacular Intelligence  &middot;  Passive Cooling  &middot;  Riyadh &middot; Khartoum &middot; Worldwide  &middot;  Architecture  &middot;  Interior Design  &middot;  Civic Spaces  &middot;  LEED Green Associate  &middot;  Experiential Design  &middot;  Booth &amp; Events  &middot;  Vernacular Intelligence  &middot;  Passive Cooling  &middot;  Riyadh &middot; Khartoum &middot; Worldwide  &middot;  </span>
     </div>
   </div>
   <div class="home-stats">
     <div class="stat-cell">
-      <div class="stat-num">4+</div>
+      <div class="stat-num" data-counter="4" data-suffix="+">4+</div>
       <div class="stat-label">Years Experience</div>
     </div>
     <div class="stat-cell">
@@ -445,6 +613,25 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
       <div class="stat-label">Member No. 855675</div>
     </div>
   </div>
+
+  <div class="services-strip">
+    <div class="services-overline reveal">Services</div>
+    <h2 class="services-h2 reveal">What I offer</h2>
+    <div class="services-grid">
+      <div class="service-cell reveal" style="transition-delay:0ms">
+        <div class="service-title">Architecture</div>
+        <p class="service-desc">Full architectural service from schematic design to construction documentation, grounded in vernacular intelligence and passive climate strategy.</p>
+      </div>
+      <div class="service-cell reveal" style="transition-delay:120ms">
+        <div class="service-title">Interior Design</div>
+        <p class="service-desc">Material palettes, space planning, and 3D visualization for commercial and residential interiors &mdash; from co-working environments to residential typologies.</p>
+      </div>
+      <div class="service-cell reveal" style="transition-delay:240ms">
+        <div class="service-title">Experiential Design</div>
+        <p class="service-desc">Booth, event, and experiential environments that communicate brand at civic scale &mdash; design that makes spaces perform as well as they appear.</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ABOUT -->
@@ -454,8 +641,8 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
       <div class="overline">About</div>
       <h1>Architecture as a social act.</h1>
     </div>
-    <div class="about-grid">
-      <div class="about-bio">
+    <div class="about-grid reveal">
+      <div class="about-bio stagger-reveal">
         <p>I am a multidisciplinary designer with four years of experience across architecture, interior design, booth and event design, experiential environments, and graphic communication. My work is driven by a human-centered approach &mdash; designing spaces, experiences, and visuals that connect people to place and purpose.</p>
         <p>My design philosophy sits at the intersection of regenerative sustainability, cultural identity, and large-scale civic ambition. From earth-material civic centers in Sudan to employee experience environments in Riyadh, I am interested in how design can serve as infrastructure for social and economic change &mdash; particularly in African and Middle Eastern urban contexts.</p>
         <p>Alongside my professional work I am deepening skills in parametric and computational design, and preparing for a Master&rsquo;s programme abroad in sustainable architecture.</p>
@@ -515,26 +702,52 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
       <h1>Selected Work</h1>
     </div>
     <div class="projects-grid">
-      <div class="project-card" onclick="showDetail()">
+      <div class="project-card reveal" onclick="showDetail()">
         <div class="card-img-wrap">
-          <img src="images/concept-diagram-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
-          <div class="card-img-overlay"><div class="overlay-text">View Project</div></div>
+          <div class="card-cat">Community Architecture</div>
+          <img src="images/img02.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div class="card-img-overlay"><div class="overlay-text">View Project &rarr;</div></div>
         </div>
         <div class="card-info">
           <div class="card-num">01 &nbsp;&middot;&nbsp; Community Architecture</div>
           <div class="card-name">Mayo Community Center</div>
+          <div class="card-location">Khartoum, Sudan</div>
         </div>
       </div>
-      <div class="project-card" style="pointer-events:none;opacity:0.35">
+      <div class="project-card reveal" onclick="showDetailServcorp()">
         <div class="card-img-wrap">
-          <div class="card-img-placeholder img-ph">
-            <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="1" stroke="#9A948E" stroke-width="1"/><path d="M2 12h28" stroke="#9A948E" stroke-width="1"/></svg>
-            <span>Project image</span>
-          </div>
+          <div class="card-cat">Interior Design</div>
+          <img src="images/img03.jpg" style="width:100%;height:100%;object-fit:cover;display:block;"><div class="card-img-overlay"><div class="overlay-text">View Project &rarr;</div></div>
+          <div class="card-img-overlay"><div class="overlay-text">View Project &rarr;</div></div>
         </div>
         <div class="card-info">
-          <div class="card-num">02 &nbsp;&middot;&nbsp; &mdash;</div>
-          <div class="card-name">Next Project</div>
+          <div class="card-num">02 &nbsp;&middot;&nbsp; Interior Design</div>
+          <div class="card-name">Servcorp Co-Working Space</div>
+          <div class="card-location">Riyadh, Saudi Arabia</div>
+        </div>
+      </div>
+      <div class="project-card reveal" onclick="showDetailAlezba()">
+        <div class="card-img-wrap">
+          <div class="card-cat">Residential &middot; Mixed Use</div>
+          <img src="images/img04.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div class="card-img-overlay"><div class="overlay-text">View Project &rarr;</div></div>
+        </div>
+        <div class="card-info">
+          <div class="card-num">03 &nbsp;&middot;&nbsp; Residential &nbsp;&middot;&nbsp; Mixed Use</div>
+          <div class="card-name">Al Sukna House</div>
+          <div class="card-location">Bahri, Khartoum, Sudan</div>
+        </div>
+      </div>
+      <div class="project-card reveal" onclick="showDetailKhartoumPark()">
+        <div class="card-img-wrap">
+          <div class="card-cat">Urban Design &amp; Landscape</div>
+          <img src="Urban Design project/for Portiflio/ChatGPT Image Apr 30, 2026, 12_48_31 AM.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div class="card-img-overlay"><div class="overlay-text">View Project &rarr;</div></div>
+        </div>
+        <div class="card-info">
+          <div class="card-num">04 &nbsp;&middot;&nbsp; Urban Design &amp; Landscape</div>
+          <div class="card-name">Khartoum Airport Site</div>
+          <div class="card-location">Khartoum, Sudan</div>
         </div>
       </div>
       <div class="add-project-card">
@@ -554,7 +767,7 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
     </button>
     <div class="detail-hero">
       <div class="detail-main-img">
-        <img src="images/concept-diagram-2.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <img src="images/img02.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>
       <div>
         <div class="detail-tag">Graduation Project &nbsp;&middot;&nbsp; Community Architecture</div>
@@ -584,54 +797,54 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
     </div>
     <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Concept Diagrams</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:4px;">
-      <div style="aspect-ratio:3/2;background:#fff;"><img src="images/townhall-sketch-1.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:3/2;background:#fff;"><img src="images/townhall-sketch-2.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:3/2;background:#fff;"><img src="images/img05.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:3/2;background:#fff;"><img src="images/img06.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;"></div>
     </div>
 
     <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Plans</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px;">
       <div style="background:#fff;text-align:center;">
-        <img src="images/mayo-siteplan.jpg" style="width:100%;display:block;cursor:zoom-in;background:#fff;">
+        <img src="mayo-siteplan.png" style="width:100%;display:block;cursor:zoom-in;background:#fff;">
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:10px 0 4px;font-weight:400;">Ground Floor</div>
       </div>
       <div style="background:#fff;text-align:center;">
-        <img src="images/mayo-1st-floor.jpg" style="width:100%;display:block;cursor:zoom-in;background:#fff;">
+        <img src="mayo-1st-floor.png" style="width:100%;display:block;cursor:zoom-in;background:#fff;">
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:10px 0 4px;font-weight:400;">1st Floor</div>
       </div>
       <div style="background:#fff;text-align:center;">
-        <img src="images/mayo-2nd-floor.jpg" style="width:100%;display:block;cursor:zoom-in;background:#fff;">
+        <img src="mayo-2nd-floor.png" style="width:100%;display:block;cursor:zoom-in;background:#fff;">
         <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:10px 0 4px;font-weight:400;">2nd Floor</div>
       </div>
     </div>
 
     <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Key Spaces</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:4px;">
-      <div style="aspect-ratio:16/9;"><img src="images/mayo-aerial-1.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:16/9;"><img src="images/mayo-aerial-2.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="mayo-aerial-new.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="mayo-aerial-2.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2px;">
-      <div style="aspect-ratio:4/3;"><img src="images/mayo-entrance.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:4/3;"><img src="images/mayo-qutya-int.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:4/3;"><img src="images/mayo-pavilion-ext.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:4/3;"><img src="images/mayo-plaza-fountain.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:4/3;"><img src="images/mayo-workshop-ext.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:4/3;"><img src="images/mayo-workshop.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:4/3;"><img src="images/mayo-plaza.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="photo_1_2026-04-08_21-35-05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="mayo-qutya-int.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="mayo-pavilion-ext2.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="mayo-plaza-fountain.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="mayo-workshop-ext.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="mayo-workshop.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="mayo-plaza.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
     </div>
 
     <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Town Hall &amp; Tree-Column</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:4px;">
-      <div style="grid-column:1/-1;aspect-ratio:16/9;"><img src="images/mayo-townhall-ext.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:4/3;"><img src="images/mayo-townhall-exploded.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
-      <div style="aspect-ratio:4/3;background:#fff;"><img src="images/project-cover.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;"></div>
+      <div style="grid-column:1/-1;aspect-ratio:16/9;"><img src="photo_2_2026-04-08_21-35-05.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;"><img src="mayo-townhall-exploded.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;background:#fff;"><img src="images/img07.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;"></div>
     </div>
 
     <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Drawings</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:4px;">
-      <div style="background:#fff;"><img src="images/mayo-workspace-sec.jpg" style="width:100%;display:block;cursor:zoom-in;background:#fff;"></div>
-      <div style="aspect-ratio:16/9;background:#fff;"><img src="images/mayo-elevation.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#fff;"></div>
-      <div style="aspect-ratio:16/9;background:#fff;"><img src="images/sec-13ra.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#fff;"></div>
-      <div style="aspect-ratio:16/9;background:#fff;"><img src="images/elev-ra.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#fff;"></div>
+      <div style="background:#fff;"><img src="mayo-workspace-sec.png" style="width:100%;display:block;cursor:zoom-in;background:#fff;"></div>
+      <div style="aspect-ratio:16/9;background:#fff;"><img src="mayo-elevation.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#fff;"></div>
+      <div style="aspect-ratio:16/9;background:#fff;"><img src="AHMED BALLA GRADUATION PROJECT (MAYO COMMINITY CENTER)-20260405T161119Z-1-001/AHMED BALLA GRADUATION PROJECT (MAYO COMMINITY CENTER)/sec 13ra.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#fff;"></div>
+      <div style="aspect-ratio:16/9;background:#fff;"><img src="AHMED BALLA GRADUATION PROJECT (MAYO COMMINITY CENTER)-20260405T161119Z-1-001/AHMED BALLA GRADUATION PROJECT (MAYO COMMINITY CENTER)/elev ra.jpg" style="width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in;background:#fff;"></div>
     </div>
 
     <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Project Video</div>
@@ -641,22 +854,99 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
   </div>
 </div>
 
-<!-- CONTACT -->
+
+<!-- DETAIL: SERVCORP -->
+<div class="page" id="page-detail-servcorp">
+  <div class="detail-wrap">
+    <button class="detail-back" onclick="showPage('projects',document.querySelectorAll('.nav-link')[2])">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.2"/></svg>
+      All Projects
+    </button>
+    <div class="detail-hero">
+      <div class="detail-main-img">
+        <img src="images/img03.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;">
+      </div>
+      <div>
+        <div class="detail-tag">Interior Design &nbsp;&middot;&nbsp; Workplace</div>
+        <div class="detail-title">Servcorp Co-Working Space</div>
+        <div class="detail-loc">Riyadh, Saudi Arabia &nbsp;&middot;&nbsp; 2025</div>
+        <div class="detail-uni">Interior Design &nbsp;&middot;&nbsp; 3D Visualization</div>
+        <div class="detail-desc">Servcorp is a global workplace solutions company operating 150+ premium co-working locations in landmark towers across 40 countries. Present in Riyadh at King Abdullah Financial District, Olaya Towers, The Business Gate, and Laysen Valley, the brand&rsquo;s identity is built around a single promise: the World&rsquo;s Finest Workspaces. This interior design commission translates that promise into a space that balances corporate precision with human warmth. The strategy centres on a palette of pecan wood column cladding, beige marble surfaces, and terracotta granite floor accents, grounded by biophilic elements &mdash; a living green wall behind the reception, potted trees, and layered planting throughout. The reception is the social heart: a curved marble desk framed by a vertical garden and the Servcorp brand panel. Beyond it, zones transition fluidly from lounge seating through collaborative dining tables to open hot-desking with panoramic city views. Acoustic booths and semi-private workstations complete the programme, offering a full spectrum from focus to collaboration.</div>
+        <div class="detail-facts">
+          <div class="fact"><div class="fact-label">Client</div><div class="fact-value">Servcorp</div></div>
+          <div class="fact"><div class="fact-label">Location</div><div class="fact-value">Riyadh, Saudi Arabia</div></div>
+          <div class="fact"><div class="fact-label">Programme</div><div class="fact-value">Reception &middot; Lounge &middot; Co-working &middot; Booths</div></div>
+          <div class="fact"><div class="fact-label">Type</div><div class="fact-value">Interior Design &amp; Visualization</div></div>
+          <div class="fact"><div class="fact-label">Materials</div><div class="fact-value">Pecan Wood &middot; Beige Marble &middot; Terracotta Granite &middot; Concrete</div></div>
+          <div class="fact"><div class="fact-label">Lighting</div><div class="fact-value">Track Rail &middot; Pendant Clusters &middot; Linear Strips</div></div>
+          <div class="fact"><div class="fact-label">Status</div><div class="fact-value">Design Proposal</div></div>
+          <div class="fact"><div class="fact-label">Year</div><div class="fact-value">2025</div></div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-section-heading">Design Concept</div>
+          <p class="detail-section-text">The design moves against the grain of the sterile open-plan office. Instead of neutrality, it asserts warmth &mdash; wood-clad columns anchor each zone like indoor trees, the floor is a gradient of cream limestone and terracotta granite, and greenery punctuates every sightline. The experience of entering the space is deliberately unhurried: the curved reception draws you in, the lounge invites you to slow down, and only then does the work begin. Zones are differentiated by ceiling treatment, lighting character, and furniture weight rather than physical partitions, creating a continuous but varied spatial journey.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Interior Renders</div>
+    <div style="aspect-ratio:16/9;background:var(--cream);margin-bottom:2px;"><img src="images/img08.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;" onclick="window.open(this.src,'_blank')"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:56px;">
+      <div style="aspect-ratio:4/3;background:var(--cream);overflow:hidden;"><img src="images/img09.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;" onclick="window.open(this.src,'_blank')"></div>
+      <div style="aspect-ratio:4/3;background:var(--cream);overflow:hidden;"><img src="images/img10.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;" onclick="window.open(this.src,'_blank')"></div>
+      <div style="aspect-ratio:4/3;background:var(--cream);overflow:hidden;"><img src="images/img11.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;" onclick="window.open(this.src,'_blank')"></div>
+      <div style="aspect-ratio:4/3;background:var(--cream);overflow:hidden;"><img src="images/img12.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;" onclick="window.open(this.src,'_blank')"></div>
+    </div>
+
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:24px;">Material Palette</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:40px;">
+      <div style="text-align:center;">
+        <img src="images/img13.webp" style="width:140px;height:140px;border-radius:50%;display:block;margin:0 auto 16px;object-fit:cover;">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:400;">Pecan Wood</div>
+        <div style="font-size:11px;color:var(--mid);margin-top:4px;">Column cladding &middot; Feature walls</div>
+      </div>
+      <div style="text-align:center;">
+        <img src="images/img14.webp" style="width:140px;height:140px;border-radius:50%;display:block;margin:0 auto 16px;object-fit:cover;">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:400;">Marble Beige</div>
+        <div style="font-size:11px;color:var(--mid);margin-top:4px;">Working spaces &middot; Floor finish</div>
+      </div>
+      <div style="text-align:center;">
+        <img src="images/img15.webp" style="width:140px;height:140px;border-radius:50%;display:block;margin:0 auto 16px;object-fit:cover;">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:400;">Granite Terracotta</div>
+        <div style="font-size:11px;color:var(--mid);margin-top:4px;">Floor accents &middot; Border bands</div>
+      </div>
+      <div style="text-align:center;">
+        <img src="images/img16.webp" style="width:140px;height:140px;border-radius:50%;display:block;margin:0 auto 16px;object-fit:cover;">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);font-weight:400;">Granite Concrete</div>
+        <div style="font-size:11px;color:var(--mid);margin-top:4px;">Reception desk &middot; Counter surfaces</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-wrap">
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Floor Plan</div>
+    <div style="background:#fff;margin-bottom:80px;"><img src="images/img17.jpg" style="width:100%;height:auto;display:block;cursor:zoom-in;" onclick="window.open(this.src,'_blank')"></div>
+  </div>
+
+
+</div>
+
+
 <div class="page" id="page-contact">
   <div class="contact-wrap">
     <div class="page-header">
       <div class="overline">Contact</div>
       <h1>Let&rsquo;s work together.</h1>
     </div>
-    <div class="contact-grid">
+    <div class="contact-grid reveal">
       <div>
         <div class="contact-block">
           <div class="contact-block-label">Email</div>
-          <div class="contact-value">arch.ahmedballa@gmail.com</div>
+          <div class="contact-value"><a href="mailto:arch.ahmedballa@gmail.com" class="contact-link">arch.ahmedballa@gmail.com</a></div>
         </div>
         <div class="contact-block">
           <div class="contact-block-label">Phone</div>
-          <div class="contact-value">+966 541 081 348</div>
+          <div class="contact-value"><a href="tel:+966541081348" class="contact-link">+966 541 081 348</a></div>
         </div>
         <div class="contact-block">
           <div class="contact-block-label">Location</div>
@@ -673,71 +963,275 @@ nav.scrolled{box-shadow:0 1px 20px rgba(0,0,0,0.06);}
           </div>
         </div>
       </div>
-      <div>
+      <form id="contact-form" name="contact" method="POST" data-netlify="true" onsubmit="return false;">
+        <input type="hidden" name="form-name" value="contact">
+        <input type="hidden" name="services" id="fservices" value="">
         <div class="form-group">
           <label class="form-label">Name</label>
-          <input class="form-input" type="text" placeholder="Your name" id="fname">
+          <input class="form-input" type="text" placeholder="Your name" id="fname" name="name">
         </div>
         <div class="form-group">
           <label class="form-label">Email</label>
-          <input class="form-input" type="email" placeholder="your@email.com" id="femail">
+          <input class="form-input" type="email" placeholder="your@email.com" id="femail" name="email">
         </div>
         <div class="form-group">
           <label class="form-label">Subject</label>
-          <input class="form-input" type="text" placeholder="Project inquiry">
+          <input class="form-input" type="text" placeholder="Project inquiry" name="subject">
         </div>
         <div class="form-group">
           <label class="form-label">Services Interested In</label>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
-            <button type="button" class="service-pill" onclick="this.classList.toggle('active')">Architecture</button>
-            <button type="button" class="service-pill" onclick="this.classList.toggle('active')">Interior Design</button>
-            <button type="button" class="service-pill" onclick="this.classList.toggle('active')">Booth &amp; Events</button>
-            <button type="button" class="service-pill" onclick="this.classList.toggle('active')">Experiential Design</button>
-            <button type="button" class="service-pill" onclick="this.classList.toggle('active')">Graphic Design</button>
-            <button type="button" class="service-pill" onclick="this.classList.toggle('active')">Consultation</button>
+            <button type="button" class="service-pill" onclick="togglePill(this)">Architecture</button>
+            <button type="button" class="service-pill" onclick="togglePill(this)">Interior Design</button>
+            <button type="button" class="service-pill" onclick="togglePill(this)">Booth &amp; Events</button>
+            <button type="button" class="service-pill" onclick="togglePill(this)">Experiential Design</button>
+            <button type="button" class="service-pill" onclick="togglePill(this)">Graphic Design</button>
+            <button type="button" class="service-pill" onclick="togglePill(this)">Consultation</button>
           </div>
         </div>
         <div class="form-group">
           <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Tell me about your project..."></textarea>
+          <textarea class="form-textarea" placeholder="Tell me about your project..." name="message"></textarea>
         </div>
         <button class="form-submit" onclick="submitForm()">Send Message</button>
         <div class="form-success" id="form-success">Message sent &mdash; I will be in touch shortly.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL: AL-EZBA -->
+<div class="page" id="page-detail-alezba">
+  <div class="detail-wrap">
+    <button class="detail-back" onclick="showPage('projects',document.querySelectorAll('.nav-link')[2])">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.2"/></svg>
+      All Projects
+    </button>
+
+
+
+    <div class="detail-hero">
+      <div class="detail-main-img" style="aspect-ratio:unset;">
+        <img src="images/img18.jpg" style="width:100%;height:auto;display:block;cursor:zoom-in;" onclick="openLightbox(this.src)" alt="Al Sukna House">
       </div>
+      <div>
+        <div class="detail-tag">Residential &nbsp;&middot;&nbsp; Mixed Use &nbsp;&middot;&nbsp; Urban Housing</div>
+        <h1 class="detail-title">Al Sukna House</h1>
+        <div class="detail-loc">Bahri, Khartoum, Sudan</div>
+        <div class="detail-uni">Future University &nbsp;&middot;&nbsp; Faculty of Architecture</div>
+        <p class="detail-desc">Al Sukna House is a residential design intervention in Al-Ezba, Bahri &mdash; a high-density neighbourhood in Khartoum where multiple related families share single plots with no spatial definition between them. Brothers and cousins live together in rooms that serve simultaneously as sleeping, cooking, eating and living spaces; boys spend most of the day outside for lack of privacy. Yet the social bond is strong and worth preserving. The project&rsquo;s ambition is not to dissolve this extended-family closeness, but to give it the spatial structure it has always lacked.<br><br>Two typologies respond to the range of households in Al-Ezba. <strong>Type 1</strong> pairs a full residential unit with a ground-floor investment space, enabling home-based income &mdash; a mixed-use house that works economically as well as socially. <strong>Type 2</strong> is a purely residential unit. Both are woven into a six-tier privacy hierarchy &mdash; from the main neighbourhood public space down to the individual bedroom &mdash; with a shared living floor per block where related families can gather without compromising the privacy of each household above.</p>
+        <div class="detail-facts">
+          <div class="fact"><div class="fact-label">Type 1</div><div class="fact-value">Mixed Use &mdash; Residential + Commercial</div></div>
+          <div class="fact"><div class="fact-label">Type 2</div><div class="fact-value">Residential</div></div>
+          <div class="fact"><div class="fact-label">Location</div><div class="fact-value">Al-Ezba, Bahri, Khartoum</div></div>
+          <div class="fact"><div class="fact-label">Privacy Levels</div><div class="fact-value">6-tier Hierarchy</div></div>
+          <div class="fact"><div class="fact-label">Scope</div><div class="fact-value">Group Urban Study + Individual Design</div></div>
+          <div class="fact"><div class="fact-label">University</div><div class="fact-value">Future University &mdash; Faculty of Architecture</div></div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-section-heading">Design Concept</div>
+          <p class="detail-section-text">The conventional answer to overcrowding is the apartment block &mdash; it delivers privacy, but severs the extended-family bond that defines life in Al-Ezba. Al Sukna proposes a third way: a six-tier privacy gradient that moves from the public street inward to the private bedroom, with a <em>shared living floor</em> per block where related families can gather, dine, and socialise without entering each other&rsquo;s private units.</p>
+          <p class="detail-section-text" style="margin-top:16px;">The vertical tower element &mdash; clad in a mashrabiya-patterned checkerboard screen of brick and void &mdash; is the architectural expression of this shared life. It rises through the building as a vertical social spine, drawing natural light, ventilation, and greenery into the interior. From the street it reads as a landmark: a signal that behind the facade, a collective life is being lived. The warm brick construction and deep-shaded balconies anchor the project in Khartoum&rsquo;s climate and material memory, while the open ground floor of Type 1 activates the street edge with productive, investment-generating uses &mdash; giving the household both shelter and livelihood.</p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Concept Diagrams</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:4px;">
+      <img src="images/img19.jpg" style="width:100%;display:block;object-fit:contain;background:#fff;cursor:zoom-in;" onclick="openLightbox(this.src)" alt="Concept C1">
+      <img src="images/img20.jpg" style="width:100%;display:block;object-fit:contain;background:#fff;cursor:zoom-in;" onclick="openLightbox(this.src)" alt="Concept C2">
+      <img src="images/img21.jpg" style="width:100%;display:block;object-fit:contain;background:#fff;cursor:zoom-in;" onclick="openLightbox(this.src)" alt="Concept C3">
+    </div>
+
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">3D Visualization</div>
+    <div style="width:100%;overflow:hidden;margin-top:4px;margin-bottom:2px;">
+      <img src="images/img22.jpg" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox(this.src)">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:2px;">
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="images/img23.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox(this.src)"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="images/img24.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox(this.src)"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr;gap:2px;margin-top:2px;">
+      <div style="aspect-ratio:16/7;overflow:hidden;"><img src="images/img25.jpg" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;" onclick="openLightbox(this.src)"></div>
+    </div>
+
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Layout Plans</div>
+    <div style="display:grid;grid-template-columns:1fr;gap:24px;margin-top:4px;">
+      <div style="background:#fff;text-align:center;">
+        <img src="images/img26.jpg" style="width:100%;display:block;cursor:zoom-in;background:#fff;" onclick="openLightbox(this.src)" alt="Ground Floor Plan">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:10px 0 4px;font-weight:400;">Ground Floor Plan &mdash; Mixed Use House</div>
+      </div>
+      <div style="background:#fff;text-align:center;">
+        <img src="images/img27.jpg" style="width:100%;display:block;object-fit:contain;background:#fff;cursor:zoom-in;" onclick="openLightbox(this.src)" alt="1st Floor Plan">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:10px 0 4px;font-weight:400;">Typical Floor Plan &mdash; Mixed Use House</div>
+      </div>
+    </div>
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Sections</div>
+    <div style="background:#fff;margin-top:4px;">
+      <img src="images/img28.jpg" style="width:100%;display:block;object-fit:contain;background:#fff;cursor:zoom-in;" onclick="openLightbox(this.src)" alt="Sections">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;">
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:10px 0 4px;font-weight:400;text-align:center;">Section (B-B)</div>
+        <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);padding:10px 0 4px;font-weight:400;text-align:center;">Section (A-A)</div>
+      </div>
+    </div>
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Elevations</div>
+    <div style="background:#fff;margin-bottom:2px;">
+      <img src="images/img29.jpg" style="width:100%;display:block;object-fit:contain;cursor:zoom-in;background:#fff;" onclick="openLightbox(this.src)" alt="Elevations">
+    </div>
+    <div style="margin-top:2px;">
+      <img src="images/img30.jpg" style="width:100%;display:block;object-fit:cover;cursor:zoom-in;" onclick="openLightbox(this.src)" alt="Elevation Render">
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL: KHARTOUM AIRPORT PARK -->
+<div class="page" id="page-detail-khartoum-park">
+  <div class="detail-wrap">
+    <button class="detail-back" onclick="showPage('projects',document.querySelectorAll('.nav-link')[2])">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.2"/></svg>
+      All Projects
+    </button>
+    <div class="detail-hero">
+      <div class="detail-main-img">
+        <img src="Urban Design project/for Portiflio/ChatGPT Image Apr 28, 2026, 03_24_52 AMm_upscayl_4x_upscayl-standard-4x.png" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div>
+        <div class="detail-tag">Academic Project &nbsp;&middot;&nbsp; Urban Design &amp; Landscape</div>
+        <h1 class="detail-title">Khartoum Airport Site &mdash; Urban Public Park</h1>
+        <div class="detail-loc">Khartoum, Sudan &nbsp;&middot;&nbsp; 2020</div>
+        <div class="detail-uni">Future University Sudan &nbsp;&middot;&nbsp; Faculty of Architecture</div>
+        <div class="detail-facts">
+          <div class="fact"><div class="fact-label">Site</div><div class="fact-value">Former civil airport &mdash; central Khartoum</div></div>
+          <div class="fact"><div class="fact-label">Zone Count</div><div class="fact-value">5 interconnected zones</div></div>
+          <div class="fact"><div class="fact-label">Programme</div><div class="fact-value">Water Axis &middot; Culture District &middot; Recreation &middot; Community Nodes &middot; Green Buffer</div></div>
+          <div class="fact"><div class="fact-label">Key Anchors</div><div class="fact-value">Tayeb Salih Library Pavilion &middot; Amphitheatre &middot; Central Lake</div></div>
+          <div class="fact"><div class="fact-label">Concept</div><div class="fact-value">Water as organizer &middot; Shade as social infrastructure &middot; Courtyard as breathing room</div></div>
+          <div class="fact"><div class="fact-label">Scale</div><div class="fact-value">City-wide &mdash; serving all residents, unconditionally</div></div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-section-heading">Design Concept</div>
+          <p class="detail-section-text">Khartoum&rsquo;s civil airport occupies one of the most strategically central parcels in the capital &mdash; vast, flat, and surrounded by a city long starved of accessible public green space. This project proposes its transformation into a large-scale civic park organized across five interconnected zones: a water axis anchored by a central lake, a culture and knowledge district housing the Tayeb Salih Library Pavilion and amphitheatre, open sport and recreation fields, community gathering nodes with informal market stalls, and a green buffer belt at the perimeter. The spatial logic draws from Sudanese urban tradition &mdash; water as organizer, shade as social infrastructure, the courtyard as a breathing room &mdash; scaled up to serve every resident of the city, unconditionally.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Master Plan</div>
+    <div style="width:100%;overflow:hidden;margin-top:4px;margin-bottom:0;">
+      <img src="Urban Design project/for Portiflio/site_centered_smooth_right_white_space.png" style="width:100%;display:block;cursor:zoom-in;">
+    </div>
+
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Park Zones &amp; Visualizations</div>
+    <div style="width:100%;overflow:hidden;margin-top:4px;margin-bottom:2px;">
+      <img src="Urban Design project/for Portiflio/ChatGPT Image Jun 1, 2026, 02_39_37 AM.png" style="width:100%;display:block;cursor:zoom-in;">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:2px;">
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="Urban Design project/for Portiflio/ChatGPT Image Apr 28, 2026, 03_49_06 AM.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="Urban Design project/for Portiflio/ChatGPT Image Apr 28, 2026, 04_58_17 AM.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2px;">
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="Urban Design project/for Portiflio/ChatGPT Image Apr 30, 2026, 01_02_32 AM.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="Urban Design project/for Portiflio/ChatGPT Image Apr 30, 2026, 01_18_42 AM.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="Urban Design project/for Portiflio/ChatGPT Image Apr 30, 2026, 01_41_12 AM.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+    </div>
+
+    <div class="detail-section-heading" style="margin-top:56px;margin-bottom:16px;">Aerial Views</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:4px;">
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="Urban Design project/for Portiflio/ChatGPT Image Jun 1, 2026, 01_08_35 AM.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
+      <div style="aspect-ratio:4/3;overflow:hidden;"><img src="Urban Design project/for Portiflio/ChatGPT Image Jun 1, 2026, 02_09_34 AM.png" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;"></div>
     </div>
   </div>
 </div>
 
 <script>
+// ── MOBILE NAV ────────────────────────────────────────────────────────────
+function toggleMobileNav(){
+  document.getElementById('nav-hamburger').classList.toggle('open');
+  document.getElementById('nav-links').classList.toggle('open');
+}
+function closeMobileNav(){
+  document.getElementById('nav-hamburger').classList.remove('open');
+  document.getElementById('nav-links').classList.remove('open');
+}
+
+// ── PAGE NAVIGATION ─────────────────────────────────────────────────────
 function showPage(id,el){
+  closeMobileNav();
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   if(el) el.classList.add('active');
-  if(id==='about') animateSkillBars();
+  if(id==='about') setTimeout(animateSkillBars,400);
+  window.location.hash=id;
+  window.scrollTo({top:0});
+  setTimeout(()=>{
+    document.querySelectorAll('#page-'+id+' .reveal,.reveal-stagger').forEach(el=>{
+      if(!el.classList.contains('in')) checkReveal(el);
+    });
+    runRevealObserver();
+  }, 80);
 }
+function restorePage(){
+  const hash=window.location.hash.replace('#','');
+  const valid=['home','about','projects','contact','detail','detail-servcorp','detail-alezba'];
+  const id=valid.includes(hash)?hash:'home';
+  const navIdx={'home':0,'about':1,'projects':2,'contact':3};
+  const navEl=navIdx[id]!==undefined?document.querySelectorAll('.nav-link')[navIdx[id]]:null;
+  showPage(id,navEl);
+}
+window.addEventListener('load',restorePage);
+
+// ── SKILL BARS ────────────────────────────────────────────────────────────
 function animateSkillBars(){
-  const bars=document.querySelectorAll('.skill-fill');
-  bars.forEach((bar,i)=>{
+  document.querySelectorAll('.skill-fill').forEach((bar,i)=>{
     if(!bar.dataset.w) bar.dataset.w=bar.style.width||'0';
     bar.style.width='0';
-    setTimeout(()=>{ bar.style.width=bar.dataset.w; },100*i+50);
+    setTimeout(()=>{ bar.style.width=bar.dataset.w; }, i*60+50);
   });
 }
-function showDetail(){
-  showPage('detail',null);
+
+// ── DETAIL PAGE SHORTCUTS ─────────────────────────────────────────────────
+function showDetail(){ showPage('detail',null); }
+function showDetailServcorp(){ showPage('detail-servcorp',null); }
+function showDetailAlezba(){ showPage('detail-alezba',null); }
+function showDetailKhartoumPark(){ showPage('detail-khartoum-park',null); }
+
+// ── FORM ─────────────────────────────────────────────────────────────────
+function togglePill(btn){
+  btn.classList.toggle('active');
+  const selected=[...document.querySelectorAll('.service-pill.active')].map(b=>b.textContent).join(', ');
+  document.getElementById('fservices').value=selected;
 }
-function submitForm(){
-  const n=document.getElementById('fname').value;
-  const e=document.getElementById('femail').value;
+async function submitForm(){
+  const n=document.getElementById('fname').value.trim();
+  const e=document.getElementById('femail').value.trim();
   if(!n||!e)return;
-  document.querySelector('.form-submit').style.display='none';
-  document.getElementById('form-success').style.display='block';
+  const btn=document.querySelector('.form-submit');
+  btn.textContent='Sending…';
+  btn.disabled=true;
+  try{
+    const form=document.getElementById('contact-form');
+    await fetch('/',{
+      method:'POST',
+      headers:{'Content-Type':'application/x-www-form-urlencoded'},
+      body:new URLSearchParams(new FormData(form)).toString()
+    });
+    btn.style.display='none';
+    document.getElementById('form-success').style.display='block';
+  }catch(err){
+    btn.textContent='Send Message';
+    btn.disabled=false;
+  }
 }
+
+// ── NAV SCROLL ────────────────────────────────────────────────────────────
 window.addEventListener('scroll',()=>{
-  document.querySelector('nav').classList.toggle('scrolled',window.scrollY>10);
+  document.querySelector('nav').classList.toggle('scrolled',window.scrollY>40);
 });
 
+// ── LIGHTBOX ─────────────────────────────────────────────────────────────
 function openLightbox(src){
   document.getElementById('lightbox-img').src=src;
   document.getElementById('lightbox').classList.add('open');
@@ -748,11 +1242,97 @@ function closeLightbox(){
   document.getElementById('lightbox-img').src='';
   document.body.style.overflow='';
 }
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();});
-document.querySelectorAll('.detail-photo img, [style*="cursor:zoom-in"]').forEach(function(img){
-  img.addEventListener('click',function(){openLightbox(this.src);});
+document.addEventListener('click',function(e){
+  if(e.target.tagName==='IMG' && e.target.style.cursor==='zoom-in') openLightbox(e.target.src);
 });
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();});
+
+// ── CUSTOM CURSOR ─────────────────────────────────────────────────────────
+(function(){
+  var dot=document.getElementById('cursor-dot');
+  var ring=document.getElementById('cursor-ring');
+  if(!dot||!ring) return;
+  var px=-100, py=-100, rx=-100, ry=-100;
+  window.addEventListener('mousemove',function(e){ px=e.clientX; py=e.clientY; });
+  (function loop(){
+    rx += (px-rx)*0.12; ry += (py-ry)*0.12;
+    dot.style.transform='translate('+(px-4)+'px,'+(py-4)+'px)';
+    ring.style.transform='translate('+(rx-20)+'px,'+(ry-20)+'px)';
+    requestAnimationFrame(loop);
+  })();
+  document.addEventListener('mouseover',function(e){
+    if(e.target.closest('button,a,[onclick],[data-cursor]')){
+      ring.style.borderColor='var(--sand)';
+      ring.style.transform+=' scale(1.8)';
+    }
+  });
+  document.addEventListener('mouseout',function(){
+    ring.style.borderColor='rgba(28,25,20,0.35)';
+  });
+})();
+
+// ── SCROLL REVEAL (IntersectionObserver) ─────────────────────────────────
+function checkReveal(el){
+  var rect=el.getBoundingClientRect();
+  if(rect.top < window.innerHeight*0.88) el.classList.add('in');
+}
+function runRevealObserver(){
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.reveal,.stagger-reveal,.he').forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+  },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal,.stagger-reveal').forEach(function(el){ obs.observe(el); });
+}
+runRevealObserver();
+
+// ── HERO ENTRANCE ─────────────────────────────────────────────────────────
+(function(){
+  var els=document.querySelectorAll('.he');
+  setTimeout(function(){
+    els.forEach(function(el){ el.classList.add('in'); });
+  },80);
+})();
+
+// ── ANIMATED COUNTERS ─────────────────────────────────────────────────────
+(function(){
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el=e.target;
+      var target=parseInt(el.dataset.counter||'0');
+      var suffix=el.dataset.suffix||'';
+      var dur=1400, start=performance.now();
+      (function tick(now){
+        var p=Math.min((now-start)/dur,1);
+        var ease=1-Math.pow(1-p,3);
+        el.textContent=Math.round(ease*target)+suffix;
+        if(p<1) requestAnimationFrame(tick);
+      })(start);
+      obs.unobserve(el);
+    });
+  },{threshold:0.5});
+  document.querySelectorAll('[data-counter]').forEach(function(el){ obs.observe(el); });
+})();
 </script>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-logo">Ahmed Balla</div>
+    <div class="footer-links">
+      <button class="footer-link" onclick="showPage('home',document.querySelectorAll('.nav-link')[0])">Home</button>
+      <button class="footer-link" onclick="showPage('about',document.querySelectorAll('.nav-link')[1])">About</button>
+      <button class="footer-link" onclick="showPage('projects',document.querySelectorAll('.nav-link')[2])">Projects</button>
+      <button class="footer-link" onclick="showPage('contact',document.querySelectorAll('.nav-link')[3])">Contact</button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2025 Ahmed Balla &mdash; Architect</div>
+    <div class="footer-email">arch.ahmedballa@gmail.com</div>
+  </div>
+</footer>
 
 <div id="lightbox" onclick="closeLightbox()">
   <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
